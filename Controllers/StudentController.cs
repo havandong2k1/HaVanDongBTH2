@@ -135,7 +135,7 @@ namespace HaVanDongBTH2.Controllers
             return View(student);
         }
 
-        // POST: Student/Delete/5
+        // POST: Student/Delete/5 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

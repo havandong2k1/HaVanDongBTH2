@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.EmployeeID)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EmployeeName)
             </th>
             <th></th>
@@ -21,6 +24,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeID)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EmployeeName)
             </td>
