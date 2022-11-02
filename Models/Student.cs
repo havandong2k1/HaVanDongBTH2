@@ -5,5 +5,6 @@ namespace HaVanDongBTH2.Models
         public string StudentID {get; set;}
         
         public string StudentName {get; set;}
+       
     }
 }

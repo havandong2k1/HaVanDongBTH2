@@ -25,6 +25,37 @@ namespace HaVanDongBTH2.Controllers
                           View(await _context.Employee.ToListAsync()) :
                           Problem("Entity set 'MvcMovieContext.Employee'  is null.");
         }
+        
+        public async Task<IActionResult> Upload()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upload(IFormFile file)
+        {
+            if (file!=null)
+            {
+                string fileExtension = Path.GetExtension(file.FileName);
+                if (fileExtension != ".xls" && fileExtension != ".xlsx")
+                {
+                    ModelState.AddModelError("", "Please choose excel file to upload!");
+                }
+                else
+                {
+                    //rename file when upload to sever
+                    var fileName = DateTime.Now.ToShortTimeString() + fileExtension;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory() + "/Upload/Excels", fileName);
+                    var fileLocation = new FileInfo(filePath).ToString();
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        //save file to server
+                        await file.CopyToAsync(stream);
+                    }
+                }
+            }
+            return View();
+        }
 
         // GET: Employee/Details/5
         public async Task<IActionResult> Details(string id)
@@ -35,7 +66,7 @@ namespace HaVanDongBTH2.Controllers
             }
 
             var employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+                .FirstOrDefaultAsync(m => m.EmpID == id);
             if (employee == null)
             {
                 return NotFound();
@@ -55,7 +86,7 @@ namespace HaVanDongBTH2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeID,EmployeeName")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmpID,EmpName,Address")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +120,7 @@ namespace HaVanDongBTH2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("EmployeeID,EmployeeName")] Employee employee)
         {
-            if (id != employee.EmployeeID)
+            if (id != employee.EmpID)
             {
                 return NotFound();
             }
@@ -103,7 +134,7 @@ namespace HaVanDongBTH2.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.EmployeeID))
+                    if (!EmployeeExists(employee.EmpID))
                     {
                         return NotFound();
                     }
@@ -126,7 +157,7 @@ namespace HaVanDongBTH2.Controllers
             }
 
             var employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+                .FirstOrDefaultAsync(m => m.EmpID == id);
             if (employee == null)
             {
                 return NotFound();
@@ -156,7 +187,8 @@ namespace HaVanDongBTH2.Controllers
 
         private bool EmployeeExists(string id)
         {
-          return (_context.Employee?.Any(e => e.EmployeeID == id)).GetValueOrDefault();
+          return (_context.Employee?.Any(e => e.EmpID == id)).GetValueOrDefault();
         }
+
     }
 }

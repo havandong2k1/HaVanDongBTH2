@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations;
 namespace HaVanDongBTH2.Models
 {
     public class Employee
     {
-        public string EmployeeID {get; set;}
+        [Key]
+        public string EmpID {get; set;}
         
-        public string EmployeeName {get; set;}
+        public string EmpName {get; set;}
+        public string Address {get; set;}
     }
 }
