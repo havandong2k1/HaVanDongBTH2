@@ -7,19 +7,20 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a><br>
+    <a asp-action="Upload">Upload Excel</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EmpID)
+                @Html.DisplayNameFor(model => model.EmployeeID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmpName)
+                @Html.DisplayNameFor(model => model.EmployeeName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.EmployeeAge)
             </th>
             <th></th>
         </tr>
@@ -28,18 +29,18 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.EmpID)
+                @Html.DisplayFor(modelItem => item.EmployeeID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmpName)
+                @Html.DisplayFor(modelItem => item.EmployeeName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
+                @Html.DisplayFor(modelItem => item.EmployeeAge)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EmpID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EmpID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmpID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EmployeeID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EmployeeID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EmployeeID">Delete</a>
             </td>
         </tr>
 }

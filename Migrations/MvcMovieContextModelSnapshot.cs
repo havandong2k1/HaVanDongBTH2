@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using MvcMovie.Data;
 
 #nullable disable
 
@@ -13,11 +14,15 @@ namespace HaVanDongBTH2.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
             modelBuilder.Entity("HaVanDongBTH2.Models.Customer", b =>
                 {
                     b.Property<string>("CustomerID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CustomerAge")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CustomerName")
@@ -34,6 +39,10 @@ namespace HaVanDongBTH2.Migrations
                     b.Property<string>("EmployeeID")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("EmployeeAge")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("EmployeeName")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -48,6 +57,10 @@ namespace HaVanDongBTH2.Migrations
                     b.Property<string>("PersonID")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PersonAge")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("PersonName")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -60,6 +73,10 @@ namespace HaVanDongBTH2.Migrations
             modelBuilder.Entity("HaVanDongBTH2.Models.Student", b =>
                 {
                     b.Property<string>("StudentID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StudentAge")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StudentName")

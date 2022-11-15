@@ -7,17 +7,20 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a><br>
+    <a asp-action="Upload">Upload Excel</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.CustomerID)
-
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerAge)
             </th>
             <th></th>
         </tr>
@@ -25,9 +28,14 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td> @Html.DisplayFor(modelItem => item.CustomerID)</td>
+             <td>
+                @Html.DisplayFor(modelItem => item.CustomerID)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerAge)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CustomerID">Edit</a> |

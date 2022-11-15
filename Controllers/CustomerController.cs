@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HaVanDongBTH2.Models;
+using HaVanDongBTH2.Models.Process;
+using MvcMovie.Data;
 
 namespace HaVanDongBTH2.Controllers
 {
@@ -55,7 +57,7 @@ namespace HaVanDongBTH2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerID,CustomerName")] Customer customer)
+        public async Task<IActionResult> Create([Bind("CustomerID,CustomerName,CustomerAge")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +89,7 @@ namespace HaVanDongBTH2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CustomerID,CustomerName")] Customer customer)
+        public async Task<IActionResult> Edit(string id, [Bind("CustomerID,CustomerName,CustomerAge")] Customer customer)
         {
             if (id != customer.CustomerID)
             {
@@ -158,5 +160,56 @@ namespace HaVanDongBTH2.Controllers
         {
           return (_context.Customer?.Any(e => e.CustomerID == id)).GetValueOrDefault();
         }
+        private ExcelProcess _excelProcess = new ExcelProcess();
+
+        public async Task<IActionResult> Upload()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult>Upload(IFormFile file)
+        {
+            if (file!=null)
+            {
+                string fileExtension = Path.GetExtension(file.FileName);
+                if (fileExtension != ".xls" && fileExtension != ".xlsx")
+                {
+                    ModelState.AddModelError("", "Please choose excel file to upload!");
+                }
+                else
+                {
+                    //rename file when upload to sever
+                    var fileName = DateTime.Now.ToShortTimeString() + fileExtension;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory() + "/Uploads/Excels", fileName);
+                    var fileLocation = new FileInfo(filePath).ToString();
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        //save file to server
+                        await file.CopyToAsync(stream);
+                        //read data from file and write to database
+                        var dt = _excelProcess.ExcelToDataTable(fileLocation);
+                        //using for loop to read data form dt
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            //create a new Student object
+                            var cus = new Customer();
+                            //set values for attribiutes
+                            cus.CustomerID = dt.Rows[i][0].ToString();
+                            cus.CustomerName = dt.Rows[i][1].ToString();
+                            cus.CustomerAge = dt.Rows[i][2].ToString();
+                            //add oject to context
+                            _context.Customer.Add(cus);
+                        }
+                        //save to database
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+            }
+            return View();
+        
     }
 }
+}
+    

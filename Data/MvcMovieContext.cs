@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using HaVanDongBTH2.Models;
 
+namespace MvcMovie.Data
+{
     public class MvcMovieContext : DbContext
     {
         public MvcMovieContext (DbContextOptions<MvcMovieContext> options)
@@ -14,9 +16,10 @@ using HaVanDongBTH2.Models;
 
         public DbSet<HaVanDongBTH2.Models.Student> Student { get; set; } = default!;
 
-        public DbSet<HaVanDongBTH2.Models.Person>? Person { get; set; }
+        public DbSet<HaVanDongBTH2.Models.Employee> Employee { get; set; } = default!;
 
-        public DbSet<HaVanDongBTH2.Models.Employee>? Employee { get; set; }
+        public DbSet<HaVanDongBTH2.Models.Customer> Customer { get; set; } = default!;
 
-        public DbSet<HaVanDongBTH2.Models.Customer>? Customer { get; set; }
+        public DbSet<HaVanDongBTH2.Models.Person> Person { get; set; } = default!;
     }
+}

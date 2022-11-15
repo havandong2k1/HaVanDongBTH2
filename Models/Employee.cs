@@ -4,9 +4,9 @@ namespace HaVanDongBTH2.Models
     public class Employee
     {
         [Key]
-        public string EmpID {get; set;}
+        public string EmployeeID {get; set;}
         
-        public string EmpName {get; set;}
-        public string Address {get; set;}
+        public string EmployeeName {get; set;}
+        public string EmployeeAge {get; set;}
     }
 }
