@@ -21,5 +21,7 @@ namespace MvcMovie.Data
         public DbSet<HaVanDongBTH2.Models.Customer> Customer { get; set; } = default!;
 
         public DbSet<HaVanDongBTH2.Models.Person> Person { get; set; } = default!;
+
+        public DbSet<HaVanDongBTH2.Models.Faculty> Faculty { get; set; } = default!;
     }
 }

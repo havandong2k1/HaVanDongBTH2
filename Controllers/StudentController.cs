@@ -49,6 +49,7 @@ namespace HaVanDongBTH2.Controllers
         // GET: Student/Create
         public IActionResult Create()
         {
+            ViewData["FacultyID"] = new SelectList(_context.Faculty, "FacultyID", "FacultyName");
             return View();
         }
 
@@ -57,7 +58,7 @@ namespace HaVanDongBTH2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentID,StudentName,StudentAge")] Student student)
+        public async Task<IActionResult> Create([Bind("StudentID,StudentName,StudentAge,FacultyID")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +66,7 @@ namespace HaVanDongBTH2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FacultyID"] = new SelectList(_context.Faculty, "FacultyID", "FacultyName", student.FacultyID );
             return View(student);
         }
 

@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace HaVanDongBTH2.Models
+
 {
     public class Student
     {
@@ -8,5 +10,8 @@ namespace HaVanDongBTH2.Models
         
         public string StudentName {get; set;}
         public string StudentAge {get; set;}
+        public string FacultyID {get; set;}
+        [ForeignKey("FacultyID")]
+        public Faculty Faculty {get; set;}
     }
 }
